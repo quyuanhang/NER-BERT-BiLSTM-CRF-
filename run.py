@@ -7,7 +7,7 @@ import argparse
 
 from models.BERT_BiLSTM_CRF import Config, BertBiLSTMCrf
 from data_helper import tag_mapping, load_sentences, prepare_dataset, BatchManager
-from train_val_test import train, test, demo
+from train_val_test import output, train, test, demo
 from utils import make_path
 
 
@@ -23,7 +23,7 @@ if __name__ == "__main__":
     # load data
     train_sentences = load_sentences(config.train_path, config.lower, config.zeros)
     dev_sentences = load_sentences(config.dev_path, config.lower, config.zeros)
-    test_sentences = load_sentences(config.test_path, config.lower, config.zeros)
+    # test_sentences = load_sentences(config.test_path, config.lower, config.zeros)
 
     # tags dict
     if not os.path.isfile(config.map_file):
@@ -43,22 +43,25 @@ if __name__ == "__main__":
     dev_data = prepare_dataset(
         dev_sentences, config.max_seq_len, tag_to_id, config.lower
     )
-    test_data = prepare_dataset(
-        test_sentences, config.max_seq_len, tag_to_id, config.lower
-    )
+    # test_data = prepare_dataset(
+        # test_sentences, config.max_seq_len, tag_to_id, config.lower
+    # )
     print("%i / %i / %i sentences in train / dev / test." % (
-        len(train_data), 0, len(test_data)))
+        len(train_data), len(dev_data), 0))
 
     train_manager = BatchManager(train_data, config.batch_size)
     dev_manager = BatchManager(dev_data, config.batch_size)
-    test_manager = BatchManager(test_data, config.batch_size)
+    # test_manager = BatchManager(test_data, config.batch_size)
 
     model = BertBiLSTMCrf(config)
     make_path(config)
 
     if mode == "train":
         train(model, config, train_manager, dev_manager, id_to_tag)
-    elif mode == "test":
-        test(model, config, test_manager, id_to_tag)
+    # elif mode == "test":
+        # test(model, config, test_manager, id_to_tag)
+    elif mode == "output":
+        output(model, config, id_to_tag, tag_to_id, "/home/aipf/work/建行杯数据集/舆情预警/testA/test.json", "/home/aipf/work/建行杯数据集/舆情预警/testA/test2.json")
+        # output(model, config, id_to_tag, tag_to_id, "data/train/1/train.json", "data/train/output.json")
     else:
         demo(model, config, id_to_tag, tag_to_id)

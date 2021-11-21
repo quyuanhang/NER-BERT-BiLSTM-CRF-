@@ -12,9 +12,11 @@ class BaseConfig(object):
     bert_config_path = "bert_model/chinese_L-12_H-768_A-12/bert_config.json"
 
     # 数据的路径
-    train_path = os.path.join(base_dir, 'data', 'train.txt')
-    dev_path = os.path.join(base_dir, 'data', 'dev.txt')
-    test_path = os.path.join(base_dir, 'data', 'test.txt')
+    train_path = os.path.join(base_dir, '/home/aipf/work/建行杯数据集/舆情预警/train2', 'train.txt')
+    # train_path = os.path.join(base_dir, 'data/train2', 'train.txt')
+    dev_path = os.path.join(base_dir, '/home/aipf/work/建行杯数据集/舆情预警/train2', 'dev.txt')
+    # dev_path = os.path.join(base_dir, 'data/train2', 'dev.txt')
+    test_path = os.path.join(base_dir, 'data/train', 'test.txt')
 
     # 存放结果的路径
     map_file = os.path.join(base_dir, 'maps.pkl')

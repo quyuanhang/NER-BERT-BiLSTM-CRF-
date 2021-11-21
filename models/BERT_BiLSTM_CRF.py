@@ -16,14 +16,14 @@ class Config(BaseConfig):
     print_per_batch = 100
     clip = 5
     dropout_keep_prob = 0.5
-    lr = 0.001
+    lr = 0.001 # 1e-3 ~ 1e-6
     optimizer = 'adam'
     zeros = False
     lower = True
 
     num_tags = None
-    lstm_dim = 200
-    max_seq_len = 128
+    lstm_dim = 768
+    max_seq_len = 128 # 需要覆盖95%以上的样本 可以先用256简单试一下
     max_epoch = 100
     steps_check = 100
 
